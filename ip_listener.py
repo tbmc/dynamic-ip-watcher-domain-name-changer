@@ -7,7 +7,7 @@ from ovh_connector import get_domain_ip, update_all_sub_domain
 
 IPIFY_URL = 'https://api.ipify.org'
 
-time = os.environ.get("TIMER", 30)
+time = os.environ.get("timer", 30)
 current_timer: Timer
 
 
