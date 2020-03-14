@@ -38,6 +38,7 @@ def check_ip():
     current_ip = get_ip_ipify()
     domain_ip = get_domain_ip()
     if current_ip != domain_ip:
+        print(f"New IP: {current_ip}")
         update_all_sub_domain(current_ip)
 
 
