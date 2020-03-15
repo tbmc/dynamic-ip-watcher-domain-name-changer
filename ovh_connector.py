@@ -8,10 +8,11 @@ __client = ovh.Client(
     application_secret=os.environ.get("application_secret"),
     consumer_key=os.environ.get("consumer_key"),
 )
+domains = os.environ.get("sub_domains", "").split(",")
 
 
 def get_domain_ip() -> str:
-    records = __client.get(f"/domain/zone/{__domain}/record", fieldType="A", subDomain="")
+    records = __client.get(f"/domain/zone/{__domain}/record", fieldType="A", subDomain=domains[0])
     record = __client.get(f"/domain/zone/{__domain}/record/{records[0]}")
     record_ip = record["target"]
     return record_ip
@@ -23,7 +24,6 @@ def update_domain(sub_domain: str, current_ip: str):
 
 
 def update_all_sub_domain(current_ip: str):
-    domains = os.environ.get("sub_domains", "").split(",")
     for d in domains:
         update_domain(d, current_ip)
 

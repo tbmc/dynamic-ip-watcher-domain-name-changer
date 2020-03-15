@@ -7,7 +7,7 @@ from ovh_connector import get_domain_ip, update_all_sub_domain
 
 IPIFY_URL = 'https://api.ipify.org'
 
-time = os.environ.get("timer", 30)
+time = int(os.environ.get("timer", 30))
 current_timer: Timer
 
 
@@ -26,8 +26,11 @@ def launch_timer():
 
 
 def timer_fn():
-    launch_timer()
-    check_ip()
+    try:
+        launch_timer()
+        check_ip()
+    except:
+        pass
 
 
 def get_ip_ipify() -> str:
@@ -38,7 +41,7 @@ def check_ip():
     current_ip = get_ip_ipify()
     domain_ip = get_domain_ip()
     if current_ip != domain_ip:
-        print(f"New IP: {current_ip}")
+        print(f"Old IP: {domain_ip} => New IP: {current_ip}")
         update_all_sub_domain(current_ip)
 
 
