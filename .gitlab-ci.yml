@@ -21,8 +21,8 @@ cache:
     - venv/
 
 before_script:
+  - apk add gcc musl-dev
   - python -V  # Print out python version for debugging
-  - apk add gcc
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
