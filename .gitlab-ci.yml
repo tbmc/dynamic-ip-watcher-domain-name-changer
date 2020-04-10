@@ -22,6 +22,7 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
+  - apk add gcc
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
@@ -30,13 +31,11 @@ before_script:
 python-linting-mypy:
   stage: lint
   script:
-    - apk add gcc
     - mypy .
 
 python-linting:
   stage: lint
   script:
-    - apk add gcc
     - black --check .
 
 python-test:
