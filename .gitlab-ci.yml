@@ -1,5 +1,10 @@
-image: python:3.8-alpine
+stages:
+  - build
+  - lint
+  - test
+  - deploy
 
+image: python:3.8-alpine
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
 variables:
@@ -22,10 +27,20 @@ before_script:
   - source venv/bin/activate
   - pip install -r requirements.txt
 
-test:
+python-linting-mypy:
+  stage: lint
+  script:
+    - mypy .
+
+python-linting:
+  stage: lint
+  script:
+    - black --check .
+
+python-test:
+  stage: test
   script:
     - python -m unittest discover
-
 
 docker-build:
     # Official docker image.

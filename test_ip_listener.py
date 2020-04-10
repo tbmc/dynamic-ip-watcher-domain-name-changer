@@ -1,4 +1,3 @@
-import sys
 import io
 import unittest
 from unittest.mock import Mock, patch, call
@@ -6,6 +5,7 @@ import signal
 
 with patch("ovh.Client"), patch("signal.signal") as signal_mock:
     import ip_listener
+
     assert signal_mock.mock_calls == [
         call(signal.SIGINT, ip_listener.timer_killer),
         call(signal.SIGTERM, ip_listener.timer_killer),
@@ -21,9 +21,8 @@ class TestGlobalVariables(unittest.TestCase):
 
 
 class TestIpListenerTimerKiller(unittest.TestCase):
-
     def test_timer_not_defined(self):
-        ip_listener.current_timer = None
+        ip_listener.current_timer = None  # type: ignore
         try:
             ip_listener.timer_killer()
         except:
@@ -37,7 +36,6 @@ class TestIpListenerTimerKiller(unittest.TestCase):
 
 
 class TestLaunchTimer(unittest.TestCase):
-
     def test_launch_timer(self):
         class TestTimer:
             def __init__(self, time: int, fn):
@@ -47,7 +45,7 @@ class TestLaunchTimer(unittest.TestCase):
             def start(self):
                 pass
 
-        ip_listener.current_timer = None
+        ip_listener.current_timer = None  # type: ignore
         with patch("ip_listener.Timer", TestTimer) as timer:
             timer.start = Mock()
             timer.start.return_value = "start"
@@ -57,10 +55,10 @@ class TestLaunchTimer(unittest.TestCase):
 
 
 class TestGetIpIpify(unittest.TestCase):
-
     def test_ip_ipify(self):
         class RequestGetReturn:
             text = "text"
+
         with patch("requests.get", return_value=RequestGetReturn()) as requests_get:
             self.assertEqual("text", ip_listener.get_ip_ipify())
             requests_get.assert_called_with(ip_listener.IPIFY_URL)
@@ -71,7 +69,6 @@ class TestGetIpIpify(unittest.TestCase):
 @patch("ip_listener.get_domain_ip")
 @patch("ip_listener.get_ip_ipify")
 class TestCheckIp(unittest.TestCase):
-
     def test_same_ip(self, ipify, domain_ip, update_all, stdout):
         ipify.return_value = "ip"
         domain_ip.return_value = "ip"

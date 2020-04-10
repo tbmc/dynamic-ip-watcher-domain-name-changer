@@ -16,13 +16,14 @@ def timer_killer():
         current_timer.cancel()
 
 
-signal.signal(signal.SIGINT, timer_killer)
-signal.signal(signal.SIGTERM, timer_killer)
+signal.signal(signal.SIGINT, timer_killer)  # type: ignore
+signal.signal(signal.SIGTERM, timer_killer)  # type: ignore
 
 
 def launch_timer():
     global current_timer
-    current_timer = Timer(time, timer_fn).start()
+    current_timer = Timer(time, timer_fn)
+    current_timer.start()
 
 
 def timer_fn():

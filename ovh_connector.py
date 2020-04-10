@@ -1,5 +1,6 @@
 import os
-import ovh
+import ovh  # type: ignore
+from typing import Optional
 
 __domain = os.environ.get("domain", "")
 __client = ovh.Client(
@@ -11,15 +12,19 @@ __client = ovh.Client(
 domains = os.environ.get("sub_domains", "").split(",")
 
 
-def get_domain_ip() -> str:
-    records = __client.get(f"/domain/zone/{__domain}/record", fieldType="A", subDomain=domains[0])
+def get_domain_ip() -> Optional[str]:
+    records = __client.get(
+        f"/domain/zone/{__domain}/record", fieldType="A", subDomain=domains[0]
+    )
     record = __client.get(f"/domain/zone/{__domain}/record/{records[0]}")
-    record_ip = record["target"]
+    record_ip: str = record["target"]
     return record_ip
 
 
 def update_domain(sub_domain: str, current_ip: str):
-    records = __client.get(f"/domain/zone/{__domain}/record", fieldType="A", subDomain=sub_domain)
+    records = __client.get(
+        f"/domain/zone/{__domain}/record", fieldType="A", subDomain=sub_domain
+    )
     __client.put(f"/domain/zone/{__domain}/record/{records[0]}", target=current_ip)
 
 
@@ -28,6 +33,5 @@ def update_all_sub_domain(current_ip: str):
         update_domain(d, current_ip)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(get_domain_ip())
-
