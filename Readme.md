@@ -1,5 +1,3 @@
-# Pipeline status
-
 [![pipeline status](https://gitlab.com/tbmc/dynamic-ip-watcher-domain-name-changer-clone/badges/master/pipeline.svg)](https://gitlab.com/tbmc/dynamic-ip-watcher-domain-name-changer-clone/-/commits/master)
 
 
