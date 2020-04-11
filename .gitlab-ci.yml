@@ -23,10 +23,17 @@ cache:
 before_script:
   - apk add gcc musl-dev
   - python -V  # Print out python version for debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install -r requirements.txt
+  - >
+    if [ -d "venv"]
+    then
+      echo "venv already exists"
+      source venv/bin/activate
+    else
+      pip install virtualenv
+      virtualenv venv
+      source venv/bin/activate
+      pip install -r requirements.txt
+    fi
 
 python-linting-mypy:
   stage: lint
