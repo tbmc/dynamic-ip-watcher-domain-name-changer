@@ -36,7 +36,7 @@ python-linting-mypy:
 python-linting:
   stage: lint
   script:
-    - black --check .
+    - black --check . --exclude venv/
 
 python-test:
   stage: test
