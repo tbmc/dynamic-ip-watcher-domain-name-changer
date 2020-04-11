@@ -52,7 +52,7 @@ class TestLaunchTimer(unittest.TestCase):
             timer.start = Mock()
             ip_listener.launch_timer()
             timer.start.assert_called()
-        self.assertEqual(True, ip_listener.current_timer.test_timer_class)
+        self.assertEqual(True, ip_listener.current_timer.test_timer_class)  # type: ignore
 
 
 class TestGetIpIpify(unittest.TestCase):
