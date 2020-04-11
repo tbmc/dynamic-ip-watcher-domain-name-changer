@@ -31,23 +31,27 @@ before_script:
       pip install virtualenv
       virtualenv venv
       source venv/bin/activate
-      pip install -r requirements.txt
+      pip install -r requirements/common.txt
+      pip install -r requirements/dev.txt
     fi
 
 python-linting-mypy:
   stage: lint
   script:
     - mypy .
+  interruptible: true
 
 python-linting:
   stage: lint
   script:
     - black --check . --exclude venv/
+  interruptible: true
 
 python-test:
   stage: test
   script:
     - python -m unittest discover
+  interruptible: true
 
 docker-build:
     # Official docker image.
@@ -62,4 +66,5 @@ docker-build:
         - docker push "$CI_REGISTRY_IMAGE"
     only:
         - master
+    interruptible: true
 
