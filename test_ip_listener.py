@@ -38,6 +38,8 @@ class TestIpListenerTimerKiller(unittest.TestCase):
 class TestLaunchTimer(unittest.TestCase):
     def test_launch_timer(self):
         class TestTimer:
+            test_timer_class = True
+
             def __init__(self, time: int, fn):
                 assert time == 30
                 assert fn == ip_listener.timer_fn
@@ -48,10 +50,9 @@ class TestLaunchTimer(unittest.TestCase):
         ip_listener.current_timer = None  # type: ignore
         with patch("ip_listener.Timer", TestTimer) as timer:
             timer.start = Mock()
-            timer.start.return_value = "start"
             ip_listener.launch_timer()
             timer.start.assert_called()
-        self.assertEqual("start", ip_listener.current_timer)
+        self.assertEqual(True, ip_listener.current_timer.test_timer_class)
 
 
 class TestGetIpIpify(unittest.TestCase):
