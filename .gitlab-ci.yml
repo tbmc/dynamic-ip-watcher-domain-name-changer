@@ -24,8 +24,7 @@ before_script:
   - apk add gcc musl-dev
   - python -V  # Print out python version for debugging
   - >
-    if [ -d "venv" ]
-    then
+    if [ -d "venv" ]; then
       echo "venv already exists"
       source venv/bin/activate
     else
