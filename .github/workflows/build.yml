@@ -11,34 +11,34 @@ jobs:
     linter:
         runs-on: [ubuntu-latest]
         steps:
-            -   uses: actions/checkout@v2
-            -   uses: actions/setup-python@v1
-                    with:
-                        python-version: [3.6, 3.7, 3.8, pypy3]
-                        architecture: x64
-            -   name: Install dependencies
-                run: |
-                    pip install -r requirements/common.txt -r requirements/dev.txt
-            -   name: Formatter
-                run: black --check . --exclude venv/
-            -   name: Type checker
-                run: mypy .
+            - uses: actions/checkout@v2
+            - uses: actions/setup-python@v1
+                with:
+                    python-version: [3.6, 3.7, 3.8, pypy3]
+                    architecture: x64
+            - name: Install dependencies
+              run: |
+                pip install -r requirements/common.txt -r requirements/dev.txt
+            - name: Formatter
+              run: black --check . --exclude venv/
+            - name: Type checker
+              run: mypy .
 
 
     test_pull_requests:
         runs-on: [ubuntu-latest, windows-latest, macos-latest]
         steps:
-            -   uses: actions/checkout@v2
-            -   uses: actions/setup-python@v1
+            - uses: actions/checkout@v2
+            - uses: actions/setup-python@v1
                 with:
                     python-version: [3.6, 3.7, 3.8, pypy3]
                     architecture: x64
-            -   name: Display Python version
-                run: python -c "import sys; print(sys.version)"
-            -   name: Install dependencies
-                run: |
-                    pip install -r requirements/common.txt -r requirements/dev.txt
-            -   name: Python test
-                run: python -m unittest discover
+            - name: Display Python version
+              run: python -c "import sys; print(sys.version)"
+            - name: Install dependencies
+              run: |
+                  pip install -r requirements/common.txt -r requirements/dev.txt
+            - name: Python test
+              run: python -m unittest discover
 
 
