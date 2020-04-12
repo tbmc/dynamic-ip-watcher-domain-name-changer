@@ -3,9 +3,9 @@ import unittest
 from unittest.mock import Mock, patch, call
 import signal
 
-with patch("ovh.Client"), patch("signal.signal") as signal_mock:
+with patch("signal.signal") as signal_mock:
     import ip_listener
-
+    ip_listener.__init__()
     assert signal_mock.mock_calls == [
         call(signal.SIGINT, ip_listener.timer_killer),
         call(signal.SIGTERM, ip_listener.timer_killer),
@@ -84,3 +84,16 @@ class TestCheckIp(unittest.TestCase):
         update_all.assert_called_with("new_ip")
         assert "Current IP: new_ip ?= Domain IP: ip" in stdout.getvalue()
         assert "Old IP: ip => New IP: new_ip" in stdout.getvalue()
+
+
+@patch("ip_listener.init_ovh")
+@patch("ip_listener.check_ip")
+@patch("ip_listener.launch_timer")
+@patch("ip_listener.__init__")
+class TestMain(unittest.TestCase):
+    def test_main(self, init, launch_timer, check_ip, ovh_init):
+        ip_listener.main()
+        init.assert_called()
+        launch_timer.assert_called()
+        check_ip.assert_called()
+        ovh_init.assert_called()

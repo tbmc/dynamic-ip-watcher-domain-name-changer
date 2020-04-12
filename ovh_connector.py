@@ -1,15 +1,22 @@
 import os
 import ovh  # type: ignore
-from typing import Optional
+from typing import Optional, List
 
-__domain = os.environ.get("domain", "")
-__client = ovh.Client(
-    endpoint=os.environ.get("endpoint"),
-    application_key=os.environ.get("application_key"),
-    application_secret=os.environ.get("application_secret"),
-    consumer_key=os.environ.get("consumer_key"),
-)
-domains = os.environ.get("sub_domains", "").split(",")
+__domain: str
+__client: ovh.Client
+domains: List[str]
+
+
+def __init__():
+    global __domain, __client, domains
+    __domain = os.environ.get("domain", "")
+    __client = ovh.Client(
+        endpoint=os.environ.get("endpoint"),
+        application_key=os.environ.get("application_key"),
+        application_secret=os.environ.get("application_secret"),
+        consumer_key=os.environ.get("consumer_key"),
+    )
+    domains = os.environ.get("sub_domains", "").split(",")
 
 
 def get_domain_ip() -> Optional[str]:
