@@ -9,7 +9,7 @@ on:
 
 jobs:
     linter:
-        runs-on: [ubuntu-latest]
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-python@v1
@@ -37,8 +37,6 @@ jobs:
               with:
                 python-version: ${{ matrix.python-version }}
                 architecture: x64
-            - name: Display Python version
-              run: python -c "import sys; print(sys.version)"
             - name: Install dependencies
               run: |
                   pip install -r requirements/common.txt -r requirements/dev.txt
