@@ -34,13 +34,13 @@ before_script:
       pip install -r requirements/common.txt -r requirements/dev.txt
     fi
 
-python-linting-mypy:
+python-type-checking:
   stage: lint
   script:
     - mypy .
   interruptible: true
 
-python-linting:
+python-formatter:
   stage: lint
   script:
     - black --check . --exclude venv/
