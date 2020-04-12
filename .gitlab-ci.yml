@@ -31,8 +31,7 @@ before_script:
       pip install virtualenv
       virtualenv venv
       source venv/bin/activate
-      pip install -r requirements/common.txt
-      pip install -r requirements/dev.txt
+      pip install -r requirements/common.txt -r requirements/dev.txt
     fi
 
 python-linting-mypy:
