@@ -9,7 +9,7 @@ environ = {
     "consumer_key": "consumer_key",
 }
 
-os.environ = {
+os.environ = {  # type: ignore
     **os.environ,
     **environ,
     "domain": "domain",
@@ -32,6 +32,7 @@ class MockClient:
 
 with patch("ovh.Client", MockClient):
     import ovh_connector
+
     assert ovh_connector.__domain == "domain"
     assert ovh_connector.__client.ovh_client_test
     for key, value in environ.items():
@@ -58,7 +59,9 @@ class TestUpdateDomain(unittest.TestCase):
     def test_update_domain(self, client_get, client_put):
         client_get.return_value = ["record1"]
         ovh_connector.update_domain("subDomain", "current_ip")
-        client_put.assert_called_with("/domain/zone/domain/record/record1", target="current_ip")
+        client_put.assert_called_with(
+            "/domain/zone/domain/record/record1", target="current_ip"
+        )
 
 
 @patch("ovh_connector.update_domain")
