@@ -5,6 +5,7 @@ import signal
 
 with patch("signal.signal") as signal_mock:
     import ip_listener
+
     ip_listener.__init__()
     assert signal_mock.mock_calls == [
         call(signal.SIGINT, ip_listener.timer_killer),

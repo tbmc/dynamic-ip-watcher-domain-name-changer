@@ -32,6 +32,7 @@ class MockClient:
 
 with patch("ovh.Client", MockClient):
     import ovh_connector
+
     ovh_connector.__init__()
     assert ovh_connector.__domain == "domain"
     assert ovh_connector.__client.ovh_client_test
