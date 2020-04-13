@@ -3,7 +3,7 @@ import signal
 from threading import Timer
 import requests
 
-from ovh_connector import __init__ as init_ovh, get_domain_ip, update_all_sub_domain
+from .ovh_connector import __init__ as init_ovh, get_domain_ip, update_all_sub_domain
 
 
 IPIFY_URL: str
