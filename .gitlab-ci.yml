@@ -71,7 +71,7 @@ pypy-test:
     image: pypy:3-7.3-slim-stretch
     stage: test
     before_script:
-        - ":"
+        - pip install -r requirements/common.txt
     script:
         - pypy3 -m unittest discover
     interruptible: true
