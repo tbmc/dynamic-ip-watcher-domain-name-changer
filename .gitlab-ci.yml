@@ -1,14 +1,14 @@
 stages:
-  - build
-  - lint
-  - test
-  - deploy
+    - build
+    - lint
+    - test
+    - deploy
 
 image: python:3.8-alpine
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 # Pip's cache doesn't store the python packages
 # https://pip.pypa.io/en/stable/reference/pip_install/#caching
@@ -16,41 +16,41 @@ variables:
 # If you want to also cache the installed packages, you have to install
 # them in a virtualenv and cache it as well.
 cache:
-  paths:
-    - .cache/pip
-    - venv/
+    paths:
+        - .cache/pip
+        - venv/
 
 before_script:
-  - apk add gcc musl-dev
-  - python -V  # Print out python version for debugging
-  - >
-    if [ -d "venv" ]; then
-      echo "venv already exists"
-      source venv/bin/activate
-    else
-      pip install virtualenv
-      virtualenv venv
-      source venv/bin/activate
-      pip install -r requirements/common.txt -r requirements/dev.txt
-    fi
+    - apk add gcc musl-dev
+    - python -V  # Print out python version for debugging
+    - >
+        if [ -d "venv" ]; then
+          echo "venv already exists"
+          source venv/bin/activate
+        else
+          pip install virtualenv
+          virtualenv venv
+          source venv/bin/activate
+          pip install -r requirements/common.txt -r requirements/dev.txt
+        fi
 
 python-type-checking:
-  stage: lint
-  script:
-    - mypy .
-  interruptible: true
+    stage: lint
+    script:
+        - mypy .
+    interruptible: true
 
 python-formatter:
-  stage: lint
-  script:
-    - black --check . --exclude venv/
-  interruptible: true
+    stage: lint
+    script:
+        - black --check . --exclude venv/
+    interruptible: true
 
 python-test:
-  stage: test
-  script:
-    - python -m unittest discover
-  interruptible: true
+    stage: test
+    script:
+        - python -m unittest discover
+    interruptible: true
 
 docker-build:
     # Official docker image.
@@ -66,4 +66,14 @@ docker-build:
     only:
         - master
     interruptible: true
+
+pypy-test:
+    image: pypy:3-7.3-slim-stretch
+    stage: test
+    before_script:
+        - ":"
+    script:
+        - pypy3 -m unittest discover
+    interruptible: true
+
 
