@@ -23,11 +23,10 @@ cache:
 before_script:
     - apk add gcc musl-dev
     - python -V  # Print out python version for debugging
-    - >
-        pip install virtualenv
-        virtualenv venv
-        source "venv/Scripts/activate"
-        pip install -r requirements/common.txt -r requirements/dev.txt
+    - pip install virtualenv
+    - virtualenv venv
+    - source "venv/Scripts/activate"
+    - pip install -r requirements/common.txt -r requirements/dev.txt
 
 python-type-checking:
     stage: lint
