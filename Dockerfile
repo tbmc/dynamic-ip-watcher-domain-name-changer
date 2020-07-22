@@ -4,4 +4,4 @@ WORKDIR /app
 COPY . /app
 RUN pip install -r requirements/common.txt
 
-CMD ["python", "ip_listener.py"]
+CMD ["python", "main.py"]
