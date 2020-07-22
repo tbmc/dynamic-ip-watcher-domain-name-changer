@@ -9,6 +9,8 @@ domains: List[str]
 
 def __init__():
     global __domain, __client, domains
+
+    print(os.environ)
     __domain = os.environ.get("domain", "")
     __client = ovh.Client(
         endpoint=os.environ.get("endpoint"),
