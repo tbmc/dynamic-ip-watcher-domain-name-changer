@@ -1,4 +1,4 @@
-isort --check-only **/*.py
-black --check . --exclude venv/
-flake8 .
+isort --profile black --check --diff .
+black --check --diff --exclude venv/ . 
+flake8 --exclude venv/ .
 mypy .

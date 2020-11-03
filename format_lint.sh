@@ -1,2 +1,2 @@
-isort --atomic **/*.py
-black . --exclude venv/
+isort --atomic --profile black --diff .
+black --diff --exclude venv/ .
