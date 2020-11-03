@@ -29,22 +29,16 @@ before_script:
     - source "venv/bin/activate"
     - pip install -r requirements/common.txt -r requirements/dev.txt
 
-python-type-checking:
+python-format-lint:
     stage: lint
     script:
-        - mypy .
-    interruptible: true
-
-python-formatter:
-    stage: lint
-    script:
-        - black --check . --exclude venv/
+        - chmod +x check_format_lint.sh && ./check_format_lint.sh
     interruptible: true
 
 python-test:
     stage: test
     script:
-        - python -m unittest discover
+        - pytest
     interruptible: true
 
 docker-build:
@@ -66,9 +60,9 @@ pypy-test:
     image: pypy:3-7.3-slim-stretch
     stage: test
     before_script:
-        - pip install -r requirements/common.txt
+        - pip install -r requirements/common.txt pytest
     script:
-        - pypy3 -m unittest discover
+        - pytest
     interruptible: true
 
 
