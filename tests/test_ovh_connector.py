@@ -34,14 +34,14 @@ with patch("ovh.Client", MockClient):
     from ip_changer import ovh_connector
 
     ovh_connector.__init__()
-    assert ovh_connector.__domain == "domain"
-    assert ovh_connector.__client.ovh_client_test
+    assert ovh_connector._domain == "domain"
+    assert ovh_connector._client.ovh_client_test
     for key, value in environ.items():
-        assert ovh_connector.__client.kwargs[key] == value
+        assert ovh_connector._client.kwargs[key] == value
     assert ovh_connector.domains == ["domain1", "domain2"]
 
 
-@patch("ip_changer.ovh_connector.__client.get")
+@patch("ip_changer.ovh_connector._client.get")
 class TestGetDomainIp(unittest.TestCase):
     def test_get_domain_ip(self, client):
         client.return_value = {0: "first", "target": "target"}
@@ -54,8 +54,8 @@ class TestGetDomainIp(unittest.TestCase):
         self.assertEqual("target", record_ip)
 
 
-@patch("ip_changer.ovh_connector.__client.put")
-@patch("ip_changer.ovh_connector.__client.get")
+@patch("ip_changer.ovh_connector._client.put")
+@patch("ip_changer.ovh_connector._client.get")
 class TestUpdateDomain(unittest.TestCase):
     def test_update_domain(self, client_get, client_put):
         client_get.return_value = ["record1"]
