@@ -1,7 +1,7 @@
 import io
-import unittest
-from unittest.mock import Mock, patch, call
 import signal
+import unittest
+from unittest.mock import Mock, call, patch
 
 with patch("signal.signal") as signal_mock:
     from ip_changer import ip_listener
@@ -26,7 +26,7 @@ class TestIpListenerTimerKiller(unittest.TestCase):
         ip_listener.current_timer = None  # type: ignore
         try:
             ip_listener.timer_killer()
-        except:
+        except:  # noqa E722
             self.fail("Should not fail")
 
     def test_timer_defined(self):

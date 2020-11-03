@@ -1,10 +1,11 @@
 import os
 import signal
 from threading import Timer
+
 import requests
 
-from .ovh_connector import __init__ as init_ovh, get_domain_ip, update_all_sub_domain
-
+from .ovh_connector import __init__ as init_ovh
+from .ovh_connector import get_domain_ip, update_all_sub_domain
 
 IPIFY_URL: str
 time: int
@@ -34,7 +35,7 @@ def timer_fn():
     try:
         launch_timer()
         check_ip()
-    except:
+    except:  # noqa E722
         pass
 
 

@@ -1,6 +1,6 @@
 import os
 import unittest
-from unittest.mock import patch, call
+from unittest.mock import call, patch
 
 environ = {
     "endpoint": "endpoint",

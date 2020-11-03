@@ -1,6 +1,7 @@
 import os
+from typing import List, Optional
+
 import ovh  # type: ignore
-from typing import Optional, List
 
 __domain: str
 __client: ovh.Client
