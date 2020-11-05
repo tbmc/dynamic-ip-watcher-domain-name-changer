@@ -1,4 +1,16 @@
-isort --profile black --check --diff .
-black --check --diff --exclude venv/ . 
-flake8 --exclude venv/ .
-mypy .
+echo "#################### isort ####################"
+isort --profile black --check --diff . || exit 1
+echo "###############################################"
+echo ""
+echo "#################### black ####################"
+black --check --diff --exclude venv/ . || exit 1
+echo "###############################################"
+echo ""
+echo "#################### flake8 ####################"
+flake8 --exclude venv/ . || exit 1
+echo "################################################"
+echo ""
+echo "#################### mypy ####################"
+mypy . || exit 1
+echo "##############################################"
+echo ""
