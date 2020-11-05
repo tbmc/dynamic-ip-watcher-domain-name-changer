@@ -1,2 +1,2 @@
-isort --atomic --profile black --diff .
-black --diff --exclude venv/ .
+isort --atomic --profile black .
+black --exclude venv/ .
